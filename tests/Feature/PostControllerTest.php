@@ -27,4 +27,14 @@ class PostControllerTest extends TestCase
             ->assertSee($posts[3]->title)
             ->assertSee($posts[4]->title);
     }
+
+    public function test_it_shows_a_single_post()
+    {
+        $post = \App\Models\Post::factory()->create(['title' => 'This is a test post']);
+
+        $response = $this->get(route('posts.show', $post->id));
+
+        $response->assertStatus(200);
+        $response->assertSee($post->title);
+    }
 }
